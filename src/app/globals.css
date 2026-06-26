@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  overflow-x: hidden;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Hide Elfsight widget branding and toolbar */
+a[href*="elfsight.com/google-reviews-widget"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: -9999 !important;
+  clip-path: circle(0) !important;
+  max-height: 0 !important;
+  max-width: 0 !important;
+  overflow: hidden !important;
+}
+
+a[href*="elfsight.com"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: -9999 !important;
+  clip-path: circle(0) !important;
+  max-height: 0 !important;
+  max-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.eapps-widget-toolbar {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: -9999 !important;
+  clip-path: circle(0) !important;
+  max-height: 0 !important;
+  max-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.es-tooltip-container {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: -9999 !important;
+  clip-path: circle(0) !important;
+  max-height: 0 !important;
+  max-width: 0 !important;
+  overflow: hidden !important;
+}
+
+div[data-radix-popper-content-wrapper] {
+  pointer-events: none !important;
+  z-index: -9999 !important;
+}

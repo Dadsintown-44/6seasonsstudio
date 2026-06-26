@@ -1,0 +1,29 @@
+import type { Config } from "tailwindcss";
+import withMT from "@material-tailwind/react/utils/withMT";
+
+const config = withMT({
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        brand: {
+          green: "#7b8a7b",
+          darkGreen: "#647464"
+        }
+      },
+      fontFamily: {
+        serif: ['var(--font-playfair)', 'serif'],
+        sans: ['var(--font-inter)', 'sans-serif'],
+      }
+    },
+  },
+  plugins: [],
+} as Config);
+
+export default config;
