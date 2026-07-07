@@ -35,56 +35,75 @@ const VideoGallery = () => {
   };
 
   return (
-    <section className="py-20 bg-white overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div className="text-center mb-16">
+          <p className="text-xs tracking-[0.35em] text-[#7b6d62] mb-4 uppercase">
+            Captured Memories
+          </p>
+          <h2 className="text-4xl md:text-5xl font-serif text-[#3a3128] mb-4">
+            Cinematic Highlights
+          </h2>
+          <p className="max-w-2xl mx-auto text-base text-[#5f5146]">
+            Step into the magic of our curated events.
+          </p>
+        </div>
+
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-[250px] md:auto-rows-[300px]"
         >
-          {videos.map((video, index) => (
-            <motion.a 
-              variants={itemVariants}
-              key={index} 
-              href={`https://www.youtube.com/watch?v=${video.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative group cursor-pointer aspect-video bg-gray-200 overflow-hidden shadow-sm block rounded-[4px]"
-            >
-              <Image
-                src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`}
-                alt={video.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors z-10" />
+          {videos.map((video, index) => {
+            const isFeatured = index === 0;
+            return (
+              <motion.a 
+                variants={itemVariants}
+                key={index} 
+                href={`https://www.youtube.com/watch?v=${video.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`relative group cursor-pointer bg-[#fbf5ee] overflow-hidden rounded-[4px] shadow-sm block transition-shadow hover:shadow-xl ${
+                  isFeatured ? 'md:col-span-2 md:row-span-2' : 'col-span-1 row-span-1'
+                }`}
+              >
+                <Image
+                  src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`}
+                  alt={video.title}
+                  fill
+                  className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                />
+                
+                {/* Default subtle overlay */}
+                <div className="absolute inset-0 bg-[#3a3128]/20 group-hover:bg-[#3a3128]/40 transition-colors duration-500 z-10" />
 
-              {/* YouTube Play Button overlay */}
-              <div className="absolute inset-0 flex items-center justify-center z-20">
-                <div className="w-14 h-10 md:w-12 md:h-8 bg-red-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-                  <Play size={18} fill="white" className="text-white ml-1" />
+                {/* Elegant Play Button */}
+                <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                  <div className={`rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.12)] group-hover:scale-110 group-hover:bg-white/30 transition-all duration-500 ease-out ${isFeatured ? 'w-24 h-24' : 'w-16 h-16'}`}>
+                    <Play size={isFeatured ? 36 : 24} className="text-white fill-white ml-1.5 opacity-90" />
+                  </div>
                 </div>
-              </div>
 
-              {/* Video Info overlay */}
-              <div className="absolute top-0 left-0 w-full p-3 z-20 bg-gradient-to-b from-black/80 to-transparent flex items-center space-x-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                <h3 className="text-white text-sm font-medium truncate drop-shadow-md">{video.title}</h3>
-              </div>
-              
-              {/* Bottom bar overlay */}
-              <div className="absolute bottom-0 left-0 w-full p-2 z-20 bg-gradient-to-t from-black/80 to-transparent flex justify-between items-center text-white/90 text-xs">
-                <div className="flex space-x-3">
-                  <span className="flex items-center space-x-1">
-                    <Play size={12} />
-                    <span>Watch</span>
-                  </span>
+                {/* Text overlay sliding up on hover */}
+                <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 z-30 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <span className="text-white/90 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase border border-white/30 px-3 py-1 rounded-full backdrop-blur-sm">
+                      Watch Film
+                    </span>
+                    <span className="text-white/70 text-[10px] md:text-xs tracking-wider">
+                      {video.duration}
+                    </span>
+                  </div>
+                  <h3 className={`text-white font-serif drop-shadow-md ${isFeatured ? 'text-2xl md:text-4xl' : 'text-xl'} leading-tight`}>
+                    {video.title}
+                  </h3>
                 </div>
-                <span>YouTube</span>
-              </div>
-            </motion.a>
-          ))}
+              </motion.a>
+            );
+          })}
         </motion.div>
       </div>
     </section>
