@@ -5,7 +5,24 @@ import { motion } from 'framer-motion';
 
 const Hero = () => {
   const [loaded, setLoaded] = useState(false);
-  useEffect(() => setLoaded(true), []);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const slides = [
+    { image: '/wedding_events.jpg' },
+    { image: '/wedding/1.jpg' },
+    { image: '/wedding/10.jpg' },
+    { image: '/wedding/11.jpg' },
+    { image: '/wedding/8.jpg' },
+    { image: '/wedding/12.jpg' },
+  ];
+
+  useEffect(() => {
+    setLoaded(true);
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
 
   return (
     <section
@@ -13,402 +30,229 @@ const Hero = () => {
       style={{
         position: 'relative',
         overflow: 'hidden',
-        background: '#faf4ef',
-        minHeight: '100vh',
-        fontFamily: '"Cormorant Garamond", "Georgia", serif',
+        background: '#1a1412',
+        height: '100vh',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      {/* Decorative leaf SVG top-right */}
-      <svg
-        style={{ position: 'absolute', top: 0, right: 0, width: 220, opacity: 0.55, pointerEvents: 'none', zIndex: 1 }}
-        viewBox="0 0 220 260"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M180 10 C160 60, 120 90, 80 140 C50 180, 30 230, 20 260" stroke="#b5826a" strokeWidth="1.5" fill="none" strokeDasharray="4 3" />
-        <ellipse cx="155" cy="55" rx="38" ry="18" fill="#c8a07a" opacity="0.22" transform="rotate(-35 155 55)" />
-        <ellipse cx="120" cy="100" rx="32" ry="14" fill="#a87d5a" opacity="0.18" transform="rotate(-50 120 100)" />
-        <ellipse cx="88" cy="148" rx="28" ry="12" fill="#b08860" opacity="0.16" transform="rotate(-60 88 148)" />
-      </svg>
+      {/* Background Slideshow */}
+      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 1 }}>
+        {slides.map((slide, idx) => (
+          <div
+            key={idx}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              opacity: activeIndex === idx ? 1 : 0,
+              transition: 'opacity 1.5s ease-in-out',
+              zIndex: activeIndex === idx ? 2 : 1,
+            }}
+          >
+            <img
+              src={slide.image}
+              alt={`Wedding background slide ${idx + 1}`}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                transform: activeIndex === idx ? 'scale(1.08)' : 'scale(1)',
+                transition: activeIndex === idx ? 'transform 5500ms linear' : 'none',
+              }}
+            />
+          </div>
+        ))}
+      </div>
 
-      {/* Decorative leaf SVG bottom-left */}
-      <svg
-        style={{ position: 'absolute', bottom: 0, left: 0, width: 160, opacity: 0.45, pointerEvents: 'none', zIndex: 1 }}
-        viewBox="0 0 160 200"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M30 200 C45 160, 70 130, 90 90 C110 55, 130 30, 150 10" stroke="#b5826a" strokeWidth="1.5" fill="none" strokeDasharray="4 3" />
-        <ellipse cx="60" cy="150" rx="30" ry="13" fill="#c8a07a" opacity="0.20" transform="rotate(30 60 150)" />
-        <ellipse cx="95" cy="105" rx="26" ry="11" fill="#a87d5a" opacity="0.16" transform="rotate(20 95 105)" />
-      </svg>
+      {/* Dark Overlay for Text Contrast */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to bottom, rgba(20,15,12,0.55) 0%, rgba(20,15,12,0.45) 50%, rgba(20,15,12,0.6) 100%)',
+          zIndex: 3,
+        }}
+      />
 
-      {/* Content */}
+      {/* Hero Content Overlay */}
       <div
         className="hero-content"
         style={{
           position: 'relative',
-          zIndex: 2,
-          maxWidth: 1280,
+          zIndex: 4,
+          maxWidth: 960,
+          width: '100%',
           margin: '0 auto',
-          padding: '72px 48px 80px',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 56,
+          padding: '120px 24px 80px',
+          textAlign: 'center',
+          color: '#ffffff',
+          display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        {/* LEFT COLUMN */}
-        <div
-          className="hero-left"
+        {/* Branding Logo */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={loaded ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
           style={{
-            opacity: loaded ? 1 : 0,
-            transform: loaded ? 'translateX(0)' : 'translateX(-28px)',
-            transition: 'opacity 0.85s ease, transform 0.85s ease',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2,
+            marginBottom: 24,
           }}
         >
-          {/* Badge */}
-          <div
+          <span
+            className="brand-cursive"
             style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              background: '#ecddd4',
-              borderRadius: 999,
-              padding: '6px 18px',
-              marginBottom: 28,
-            }}
-          >
-            <span style={{ color: '#c87159', fontSize: 13, fontWeight: 600 }}>✦</span>
-            <span
-              style={{
-                fontFamily: '"Lato", sans-serif',
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: '0.38em',
-                textTransform: 'uppercase',
-                color: '#7a5c4a',
-              }}
-            >
-              Luxury Wedding &amp; Events Studio
-            </span>
-            <span style={{ color: '#c87159', fontSize: 13, fontWeight: 600 }}>✦</span>
-          </div>
-
-          {/* Headline */}
-          <h1
-            style={{
-              margin: 0,
-              lineHeight: 1.0,
-              color: '#2a231e',
-            }}
-          >
-            <span
-              style={{
-                display: 'block',
-                fontSize: 'clamp(52px, 6vw, 84px)',
-                fontWeight: 300,
-                letterSpacing: '-0.01em',
-              }}
-            >
-              Artistic
-            </span>
-            <span
-              style={{
-                display: 'block',
-                fontSize: 'clamp(44px, 5.2vw, 74px)',
-                fontWeight: 400,
-                fontStyle: 'italic',
-                color: '#c87159',
-                letterSpacing: '0.01em',
-                lineHeight: 1.1,
-              }}
-            >
-              Timeless
-            </span>
-            <span
-              style={{
-                display: 'block',
-                fontSize: 'clamp(52px, 6vw, 84px)',
-                fontWeight: 300,
-                letterSpacing: '-0.01em',
-              }}
-            >
-              Experiences
-            </span>
-          </h1>
-
-          {/* Divider ornament */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '20px 0 22px' }}>
-            <div style={{ width: 48, height: 1, background: '#d4b09a' }} />
-            <svg width="18" height="10" viewBox="0 0 18 10" fill="none">
-              <path d="M1 5 Q4.5 1 9 5 Q13.5 9 17 5" stroke="#c87159" strokeWidth="1.2" fill="none" />
-            </svg>
-            <div style={{ width: 48, height: 1, background: '#d4b09a' }} />
-          </div>
-
-          {/* Description */}
-          <p
-            style={{
-              fontFamily: '"Lato", sans-serif',
-              fontSize: 15,
-              lineHeight: 1.75,
-              color: '#6b5445',
-              maxWidth: 440,
-              margin: '0 0 32px',
+              fontFamily: '"Pinyon Script", cursive',
+              fontSize: 'clamp(58px, 8vw, 84px)',
+              color: '#f0dcd3',
+              lineHeight: 0.8,
+              textShadow: '0 2px 10px rgba(0,0,0,0.25)',
               fontWeight: 400,
             }}
           >
-            We craft aesthetic weddings, destination celebrations and modern luxury corporate events inspired by editorial styling.
-          </p>
+            6 Seasons
+          </span>
+          <span
+            style={{
+              fontFamily: '"Lato", sans-serif',
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: '0.55em',
+              textTransform: 'uppercase',
+              color: '#f0dcd3',
+              opacity: 0.85,
+              paddingLeft: '0.55em',
+              marginTop: 4,
+            }}
+          >
+            Studio
+          </span>
+        </motion.div>
 
-          {/* CTA Buttons */}
-          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 44 }}>
-            <a
-              href="/wedding"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 10,
-                background: '#c87159',
-                color: '#fff',
-                borderRadius: 999,
-                padding: '13px 28px',
-                fontFamily: '"Lato", sans-serif',
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: '0.22em',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                boxShadow: '0 4px 18px rgba(200,113,89,0.28)',
-                transition: 'box-shadow 0.2s, transform 0.2s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 28px rgba(200,113,89,0.4)'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 18px rgba(200,113,89,0.28)'; e.currentTarget.style.transform = 'none'; }}
-            >
-              Wedding Events
-              <span style={{ width: 22, height: 22, borderRadius: '50%', background: 'rgba(255,255,255,0.22)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>›</span>
-            </a>
-            <a
-              href="/corporate-events"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 10,
-                background: 'transparent',
-                color: '#3b2f27',
-                borderRadius: 999,
-                border: '1.5px solid #d4b09a',
-                padding: '13px 28px',
-                fontFamily: '"Lato", sans-serif',
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: '0.22em',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                transition: 'background 0.2s, border-color 0.2s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#f0e4da'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
-            >
-              Corporate Events
-              <span style={{ width: 22, height: 22, borderRadius: '50%', border: '1.5px solid #d4b09a', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>›</span>
-            </a>
-          </div>
-
-          {/* Stats */}
-          <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
-            {[
-              { icon: '◎', label: 'Years of Experience', value: '10+' },
-              { icon: '❋', label: 'Events Curated', value: '500+' },
-              { icon: '◈', label: 'Design & Styling', value: 'Premium' },
-              { icon: '⊕', label: '& Destination', value: 'Pan India' },
-            ].map(({ icon, label, value }) => (
-              <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                  <span style={{ color: '#c87159', fontSize: 14 }}>{icon}</span>
-                  <span
-                    style={{
-                      fontFamily: '"Lato", sans-serif',
-                      fontSize: 16,
-                      fontWeight: 700,
-                      color: '#2a231e',
-                    }}
-                  >
-                    {value}
-                  </span>
-                </div>
-                <span
-                  style={{
-                    fontFamily: '"Lato", sans-serif',
-                    fontSize: 10,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: '#a07a63',
-                    fontWeight: 600,
-                  }}
-                >
-                  {label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* RIGHT COLUMN — overlapping image cards */}
-        <div
-          className="hero-right"
+        {/* Main Heading */}
+        <motion.h1
+          initial={{ opacity: 0, y: 15 }}
+          animate={loaded ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
           style={{
-            position: 'relative',
-            minHeight: 560,
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            opacity: loaded ? 1 : 0,
-            transform: loaded ? 'translateY(0)' : 'translateY(28px)',
-            transition: 'opacity 1s ease 0.15s, transform 1s ease 0.15s',
+            fontFamily: '"Cormorant Garamond", "Playfair Display", serif',
+            fontSize: 'clamp(38px, 5.5vw, 76px)',
+            fontWeight: 300,
+            color: '#ffffff',
+            margin: '0 0 20px',
+            lineHeight: 1.15,
+            letterSpacing: '0.01em',
+            textShadow: '0 4px 18px rgba(0,0,0,0.35)',
           }}
         >
-          {/* Primary image card */}
-          <div
-            className="hero-primary-card"
-            style={{
-              position: 'absolute',
-              right: 0,
-              bottom: 76,
-              width: '82%',
-              maxWidth: 520,
-              borderRadius: 24,
-              background: '#fff',
-              boxShadow: '0 32px 72px rgba(80,40,20,0.14)',
-              overflow: 'hidden',
-            }}
-          >
-            <img
-              src="/wedding/1.jpg"
-              alt="Luxury wedding venue"
-              style={{ width: '100%', height: 380, objectFit: 'cover', objectPosition: 'center bottom', display: 'block' }}
-            />
-          </div>
+          Weddings &amp; Luxury Events
+        </motion.h1>
 
-          {/* Secondary image card — overlapping bottom-left */}
-          <div
-            className="hero-secondary-card"
-            style={{
-              position: 'absolute',
-              left: 0,
-              bottom: 0,
-              width: '46%',
-              maxWidth: 260,
-              borderRadius: 20,
-              background: '#fff',
-              boxShadow: '0 20px 48px rgba(80,40,20,0.12)',
-              overflow: 'hidden',
-              border: '3px solid #fff',
-            }}
-          >
-            <img
-              src="/wedding/3.png"
-              alt="Wedding styling"
-              style={{ width: '100%', height: 210, objectFit: 'cover', objectPosition: 'center bottom', display: 'block' }}
-            />
-          </div>
+        {/* Short Divider Line */}
+        <motion.div
+          initial={{ opacity: 0, width: 0 }}
+          animate={loaded ? { opacity: 0.8, width: 80 } : {}}
+          transition={{ duration: 1.0, delay: 0.5 }}
+          style={{
+            height: 1,
+            background: 'linear-gradient(to right, transparent, #e5d5c5, transparent)',
+            marginBottom: 24,
+          }}
+        />
 
-          {/* Floating badge — top-left of primary image area */}
-          <div
-            className="hero-badge"
-            style={{
-              position: 'absolute',
-              top: 10,
-              right: '70%',
-              background: '#fff',
-              borderRadius: 14,
-              padding: '10px 16px',
-              boxShadow: '0 8px 24px rgba(80,40,20,0.10)',
-              minWidth: 90,
-              textAlign: 'center',
-            }}
-          >
-            <div style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 22, fontWeight: 600, color: '#c87159' }}>✦</div>
-            <div style={{ fontFamily: '"Lato", sans-serif', fontSize: 9, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#8a6755', marginTop: 2 }}>Est. 2014</div>
-          </div>
-        </div>
+        {/* Description Paragraph */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={loaded ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1.2, delay: 0.5, ease: 'easeOut' }}
+          style={{
+            fontFamily: '"Lato", sans-serif',
+            fontSize: 'clamp(14px, 1.8vw, 16px)',
+            lineHeight: 1.8,
+            color: '#f3e8e2',
+            maxWidth: 680,
+            margin: '0 auto 24px',
+            fontWeight: 400,
+            opacity: 0.95,
+            textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+          }}
+        >
+          From intimate affairs to grand destination weddings, we curate experiences that reflect your story, flawlessly planned, beautifully designed, and effortlessly executed.
+        </motion.p>
+
+        {/* Quote Block */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={loaded ? { opacity: 0.9, y: 0 } : {}}
+          transition={{ duration: 1.2, delay: 0.7, ease: 'easeOut' }}
+          style={{
+            fontFamily: '"Cormorant Garamond", serif',
+            fontStyle: 'italic',
+            fontSize: 'clamp(16px, 2.2vw, 21px)',
+            lineHeight: 1.6,
+            color: '#e5d5c5',
+            maxWidth: 620,
+            margin: '0 auto 36px',
+            fontWeight: 300,
+            textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+          }}
+        >
+          &ldquo;It&apos;s the little details that make your day feel like yours and unforgettable for everyone else.&rdquo;
+        </motion.p>
+
       </div>
 
-      {/* Google font import */}
+      {/* Slide dots / bar indicators */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 10,
+          position: 'absolute',
+          bottom: 40,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 10,
+        }}
+      >
+        {slides.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActiveIndex(idx)}
+            style={{
+              height: 4,
+              width: activeIndex === idx ? 32 : 8,
+              borderRadius: 2,
+              background: activeIndex === idx ? '#ffffff' : 'rgba(255,255,255,0.45)',
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer',
+              transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Google fonts import */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Lato:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Lato:wght@400;700&family=Pinyon+Script&display=swap');
 
         @media (max-width: 768px) {
           .hero-content {
-            grid-template-columns: 1fr !important;
-            gap: 28px !important;
-            padding: 36px 20px 52px !important;
+            padding: 100px 16px 60px !important;
           }
-
-          .hero-left {
-            max-width: 100% !important;
-          }
-
-          .hero-left h1 span {
-            font-size: clamp(40px, 14vw, 62px) !important;
-          }
-
-          .hero-left p {
-            max-width: 100% !important;
-          }
-
-          .hero-right {
-            min-height: 460px !important;
-            width: 100% !important;
-            justify-content: flex-end !important;
-            align-items: flex-end !important;
-            margin-top: 8px !important;
-          }
-
-          .hero-primary-card,
-          .hero-secondary-card {
-            position: absolute !important;
-            left: auto !important;
-            right: auto !important;
-            top: auto !important;
-            bottom: auto !important;
-            width: auto !important;
-            max-width: none !important;
-          }
-
-          .hero-primary-card {
-            right: 0 !important;
-            top: 0 !important;
-            width: 84% !important;
-            border-radius: 28px !important;
-            z-index: 2;
-          }
-
-          .hero-primary-card img {
-            height: 360px !important;
-            object-position: center center !important;
-          }
-
-          .hero-secondary-card {
-            left: 0 !important;
-            bottom: 0 !important;
-            width: 56% !important;
-            border-radius: 22px !important;
-            z-index: 3;
-          }
-
-          .hero-secondary-card img {
-            height: 230px !important;
-            object-position: center center !important;
-          }
-
-          .hero-content .hero-right {
-            position: relative;
-          }
-
-          .hero-badge {
-            display: none !important;
+          
+          .brand-cursive {
+            font-size: clamp(48px, 12vw, 68px) !important;
           }
         }
       `}</style>
