@@ -40,23 +40,6 @@ export default function WeddingPage() {
             <p className="mt-6 text-base leading-8 text-white/80 sm:text-lg">
               Our weddings are created with thoughtful layers, editorial direction, and immersive details that leave a lasting impression from ceremony to celebration.
             </p>
-
-            <div className="mt-10 flex flex-wrap gap-4 justify-center">
-              <Link
-                href="/wedding"
-                className="rounded-full bg-white px-7 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#3b332d] shadow-lg shadow-black/10"
-              >
-                Explore weddings
-              </Link>
-              <Link
-                href="/pdf/corporate.pdf"
-                className="rounded-full border border-white/70 bg-white/10 px-7 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-white/20"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View brochure
-              </Link>
-            </div>
           </div>
         </div>
       </section>

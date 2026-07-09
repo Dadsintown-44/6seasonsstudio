@@ -4,6 +4,7 @@ import CorporateHeroSlider from '@/components/CorporateHeroSlider';
 import RemoveElfsightBranding from '@/components/RemoveElfsightBranding';
 import TabbedGallery from '@/components/TabbedGallery';
 import Collaborations from '@/components/Collaborations';
+import CorporateFeatures from '@/components/CorporateFeatures';
 
 export default function CorporateEventsPage() {
   return (
@@ -19,6 +20,8 @@ export default function CorporateEventsPage() {
       <div className="bg-[#f8f8f8]">
         <Collaborations />
       </div>
+
+      <CorporateFeatures />
 
       {/* Testimonials Section */}
       <section className="py-24 bg-white text-center">
