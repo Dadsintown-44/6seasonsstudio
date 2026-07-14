@@ -2,7 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function TabbedGallery() {
+type TabbedGalleryProps = {
+  showHeader?: boolean;
+  edgeToEdge?: boolean;
+};
+
+export default function TabbedGallery({ showHeader = true, edgeToEdge = false }: TabbedGalleryProps) {
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
 
   const images = [
@@ -64,13 +69,15 @@ export default function TabbedGallery() {
   const { row1, row2 } = splitImages(images);
  
   return (
-    <div className="max-w-7xl mx-auto py-20 px-4">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-serif text-[#3a3128] mb-4">Gallery</h2>
-        <p className="text-sm tracking-[0.35em] uppercase text-[#7b6d62] relative inline-block before:content-[''] before:absolute before:w-16 before:h-[1px] before:bg-[#d2c5b8] before:right-full before:mr-6 before:top-1/2 after:content-[''] after:absolute after:w-16 after:h-[1px] after:bg-[#d2c5b8] after:left-full after:ml-6 after:top-1/2">
-          That You Will Remember Forever
-        </p>
-      </div>
+    <div className={edgeToEdge ? 'w-full py-24 overflow-hidden' : 'max-w-7xl mx-auto py-20 px-4'}>
+      {showHeader && (
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-serif text-[#3a3128] mb-4">Gallery</h2>
+          <p className="text-sm tracking-[0.35em] uppercase text-[#7b6d62] relative inline-block before:content-[''] before:absolute before:w-16 before:h-[1px] before:bg-[#d2c5b8] before:right-full before:mr-6 before:top-1/2 after:content-[''] after:absolute after:w-16 after:h-[1px] after:bg-[#d2c5b8] after:left-full after:ml-6 after:top-1/2">
+            That You Will Remember Forever
+          </p>
+        </div>
+      )}
 
       <div className="flex flex-col gap-6 py-4 overflow-hidden">
         {/* Row 1: Right scrolling (from left to right) */}
@@ -83,7 +90,7 @@ export default function TabbedGallery() {
               {row1.map(({ imageLink, originalIndex }, index) => (
                 <div
                   key={index}
-                  className="w-[320px] aspect-[4/3] flex-shrink-0 overflow-hidden rounded-[4px] cursor-pointer group bg-[#fffaf4] relative shadow-sm hover:shadow-xl transition-all duration-500 border border-[#efe3da]/40"
+                  className="w-[320px] h-[340px] md:h-[420px] flex-shrink-0 overflow-hidden rounded-[4px] cursor-pointer group bg-[#fffaf4] relative shadow-sm hover:shadow-xl transition-all duration-500 border border-[#efe3da]/40"
                   onClick={() => setActiveImageIndex(originalIndex)}
                 >
                   <img
@@ -100,7 +107,7 @@ export default function TabbedGallery() {
               {row1.map(({ imageLink, originalIndex }, index) => (
                 <div
                   key={`dup-${index}`}
-                  className="w-[320px] aspect-[4/3] flex-shrink-0 overflow-hidden rounded-[4px] cursor-pointer group bg-[#fffaf4] relative shadow-sm hover:shadow-xl transition-all duration-500 border border-[#efe3da]/40"
+                  className="w-[320px] h-[340px] md:h-[420px] flex-shrink-0 overflow-hidden rounded-[4px] cursor-pointer group bg-[#fffaf4] relative shadow-sm hover:shadow-xl transition-all duration-500 border border-[#efe3da]/40"
                   onClick={() => setActiveImageIndex(originalIndex)}
                 >
                   <img
@@ -126,7 +133,7 @@ export default function TabbedGallery() {
               {row2.map(({ imageLink, originalIndex }, index) => (
                 <div
                   key={index}
-                  className="w-[320px] aspect-[4/3] flex-shrink-0 overflow-hidden rounded-[4px] cursor-pointer group bg-[#fffaf4] relative shadow-sm hover:shadow-xl transition-all duration-500 border border-[#efe3da]/40"
+                  className="w-[320px] h-[340px] md:h-[420px] flex-shrink-0 overflow-hidden rounded-[4px] cursor-pointer group bg-[#fffaf4] relative shadow-sm hover:shadow-xl transition-all duration-500 border border-[#efe3da]/40"
                   onClick={() => setActiveImageIndex(originalIndex)}
                 >
                   <img
@@ -143,7 +150,7 @@ export default function TabbedGallery() {
               {row2.map(({ imageLink, originalIndex }, index) => (
                 <div
                   key={`dup-${index}`}
-                  className="w-[320px] aspect-[4/3] flex-shrink-0 overflow-hidden rounded-[4px] cursor-pointer group bg-[#fffaf4] relative shadow-sm hover:shadow-xl transition-all duration-500 border border-[#efe3da]/40"
+                  className="w-[320px] h-[340px] md:h-[420px] flex-shrink-0 overflow-hidden rounded-[4px] cursor-pointer group bg-[#fffaf4] relative shadow-sm hover:shadow-xl transition-all duration-500 border border-[#efe3da]/40"
                   onClick={() => setActiveImageIndex(originalIndex)}
                 >
                   <img

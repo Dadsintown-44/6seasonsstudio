@@ -16,7 +16,7 @@ const Navbar = ({ pdfPath }: Props) => {
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Corporate Events', href: '/corporate-events' },
+    { name: 'About', href: '/about' },
     { name: 'Wedding', href: '/wedding' },
   ];
 
